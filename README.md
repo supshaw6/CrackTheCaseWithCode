@@ -1,6 +1,6 @@
 ## Recording App (for Twilio Voices)
 
-Hey user! The purpose of this app is to have the user:
+Hey user! The purpose of this app is to have you (the user):
 
 - Set up a Twilio phone number
 - Be able to record both sides of a phone call (using Twilio Programmable Voices API)
