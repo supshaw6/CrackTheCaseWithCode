@@ -4,24 +4,26 @@
 // What does this do?
 exports.handler = function(context, event, callback) {
  let response = new Twilio.twiml.VoiceResponse();
+  
+ // Ask user to input the phone number they'd like to call
+ let number = response.gather({
+     numDigits: 10,
+     timeout: 5,
+     action: '/call-confirm'
+ });
+ number.say(
+     { voice: 'woman', language: 'en-US' },
+     'Thank you for calling the Crack The Case With Code phone line. Type in the number you would like to call.'
+ ); // may only work for U.S. numbers (10 digits omitting +1)
 
- // documentation for say (creates TwiML)
- // -> https://www.twilio.com/docs/voice/twiml/say
+ // Ask prompt again if user does not input any numbers
  response.say(
    { voice: 'woman', language: 'en-US' },
-   'Start recording your message after the tone.'
+   'Let\'s try this again!'
  );
-
- // documentation for record
- // -> https://www.twilio.com/docs/voice/twiml/record
- response.record({
-   action: '/call-exit',
-   timeout: '10',
-   transcribe: 'true',
-   transcribeCallback: '/transcribe-title'
- });
+ response.redirect('/call-enter');
 
  callback(null, response);
 };
 
-// run with "npx twilio-run --live --ngrok" in terminal
+// run with "npx twilio-run --live --ngrok" 
